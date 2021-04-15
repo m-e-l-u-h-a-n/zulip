@@ -18,6 +18,7 @@ import * as markdown from "./markdown";
 import * as narrow from "./narrow";
 import * as overlays from "./overlays";
 import * as people from "./people";
+import * as rm from "./rendered_markdown";
 import * as stream_data from "./stream_data";
 import * as timerender from "./timerender";
 import * as util from "./util";
@@ -357,9 +358,17 @@ export function launch() {
             drafts,
             draft_lifetime: DRAFT_LIFETIME,
         });
-        $("#drafts_table").append(rendered);
+        const drafts_table = $("#drafts_table");
+        drafts_table.append(rendered);
         if ($("#drafts_table .draft-row").length > 0) {
             $("#drafts_table .no-drafts").hide();
+            // Update possible dynamic elements.
+            const rendered_drafts = drafts_table.find(
+                ".message_content.rendered_markdown.restore-draft",
+            );
+            rendered_drafts.each(function () {
+                rm.update_elements($(this));
+            });
         }
     }
 
