@@ -5,6 +5,7 @@ import render_message_edit_history from "../templates/message_edit_history.hbs";
 
 import * as channel from "./channel";
 import {$t_html} from "./i18n";
+import * as overlays from "./overlays";
 import * as people from "./people";
 import * as rm from "./rendered_markdown";
 import * as timerender from "./timerender";
@@ -82,6 +83,6 @@ export function fetch_and_render_message_history(message) {
 
 export function show_history(message) {
     $("#message-history").html("");
-    $("#message-edit-history").modal("show");
+    overlays.open_modal("#message-edit-history");
     fetch_and_render_message_history(message);
 }
