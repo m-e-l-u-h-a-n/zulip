@@ -6,6 +6,7 @@ import render_message_edit_history from "../templates/message_edit_history.hbs";
 import * as channel from "./channel";
 import {$t_html} from "./i18n";
 import * as people from "./people";
+import * as rm from "./rendered_markdown";
 import * as timerender from "./timerender";
 import * as ui_report from "./ui_report";
 
@@ -61,6 +62,13 @@ export function fetch_and_render_message_history(message) {
                     edited_messages: content_edit_history,
                 }),
             );
+            // Pass the history through rendered_markdown.js
+            // to update dynamic_elements in the content.
+            $("#message-history")
+                .find(".rendered_markdown")
+                .each(function () {
+                    rm.update_elements($(this));
+                });
         },
         error(xhr) {
             ui_report.error(
