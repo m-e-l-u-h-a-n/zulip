@@ -73,6 +73,7 @@ const search = mock_esm("../../static/js/search");
 const settings_data = mock_esm("../../static/js/settings_data");
 const stream_list = mock_esm("../../static/js/stream_list");
 const subs = mock_esm("../../static/js/subs");
+const topic_zoom = mock_esm("../../static/js/topic_zoom");
 
 mock_esm("../../static/js/hotspots", {
     is_open: () => false,
@@ -253,7 +254,7 @@ run_test("allow normal typing when processing text", ({override}) => {
     // Unmapped keys should immediately return false, without
     // calling any functions outside of hotkey.js.
     assert_unmapped("bfmoyz");
-    assert_unmapped("BEFHILNOQTUWXYZ");
+    assert_unmapped("BEFHILNOTUWXYZ");
 
     // We have to skip some checks due to the way the code is
     // currently organized for mapped keys.
@@ -293,6 +294,7 @@ run_test("basic mappings", () => {
     assert_mapping("/", search, "initiate_search");
     assert_mapping("w", activity, "initiate_search");
     assert_mapping("q", stream_list, "initiate_search");
+    assert_mapping("Q", topic_zoom, "handle_topic_zoom_hotkey");
 
     assert_mapping("A", narrow, "stream_cycle_backward");
     assert_mapping("D", narrow, "stream_cycle_forward");
